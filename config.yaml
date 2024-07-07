@@ -1,0 +1,29 @@
+version: "2.5"
+slug: hyperion_home_assistant_bridge_addon
+name: Hyperion Home Assistant Bridge - Addon
+description: Bridge between Hyperion and Home Assistant
+arch:
+  - armhf
+  - armv7
+  - aarch64
+  - amd64
+  - i386
+host_network: true
+image: homeassistant/{arch}-hyperion_home_assistant_bridge_addon
+options:
+  port: 41234
+  ha_token: ''
+  lights:
+    - id: "lampa_na_parapecie_rgb_light"
+      type: "rgb"
+    - id: "ikea_of_sweden_tradfribulbe27wsglobeopal1055lm_light"
+      type: "dim"
+schema:
+  port: int
+  ha_token: str
+  lights:
+    - id: str
+      type: str
+startup: services
+stdin: false
+init: false

@@ -1,4 +1,4 @@
-version: "2.6"
+version: "2.6.4"
 slug: hyperion_home_assistant_bridge_addon
 name: Hyperion Home Assistant Bridge - Addon
 description: Bridge between Hyperion and Home Assistant

@@ -7,15 +7,11 @@ LIGHTS=$(jq --compact-output '.lights' $CONFIG_PATH)
 
 export HA_BRIDGE_PORT=$PORT
 export HA_TOKEN=$HA_TOKEN
-export CONFIG_FILE=/usr/src/app/config.js
+export HA_LIGHTS=$LIGHTS
 
-if [ -z "$LIGHTS" ]; then
-  echo "module.exports = { lights: [] };" > /usr/src/app/config.js
-else
-  echo "module.exports = { lights: $LIGHTS };" > /usr/src/app/config.js
+if [ -z "$PORT" ] || [ -z "$HA_TOKEN" ] || [ -z "$LIGHTS" ]; then
+  echo "Error: Missing required configuration options" >&2
+  exit 1
 fi
-
-# Clear previous logs
-> /config/hyperion_ha_bridge.log
 
 node index.js

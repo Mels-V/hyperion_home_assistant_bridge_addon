@@ -12,16 +12,10 @@ const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    winston.format.colorize(),
     winston.format.printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`)
   ),
   transports: [
     new winston.transports.Console({
-      handleExceptions: true,
-      handleRejections: true
-    }),
-    new winston.transports.File({
-      filename: '/config/hyperion_ha_bridge.log',
       handleExceptions: true,
       handleRejections: true
     })
@@ -45,6 +39,17 @@ console.warn = function (message) {
 console.info = function (message) {
   logger.info(message);
 };
+
+// Handle uncaught exceptions and unhandled rejections
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  process.exit(1); // exit the process to avoid undefined states
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection:', reason);
+  process.exit(1); // exit the process to avoid undefined states
+});
 
 server.on("error", (err) => {
   console.error(`server error:\n${err.stack}`);

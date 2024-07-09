@@ -1,7 +1,7 @@
-const { CONFIG_FILE } = require("./env.js");
+const { lights } = require("./env.js");
 
 module.exports = {
   getConfig: function getConfig() {
-    return require(CONFIG_FILE);
+    return { lights };
   },
 };

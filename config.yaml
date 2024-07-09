@@ -1,4 +1,4 @@
-version: "1.0.0"
+version: "1.0.1"
 slug: hyperion_home_assistant_bridge_addon
 name: Hyperion Home Assistant Bridge - Addon
 description: Bridge between Hyperion and Home Assistant
@@ -18,11 +18,17 @@ options:
       type: "rgb"
     - id: "ikea_of_sweden_tradfribulbe27wsglobeopal1055lm_light"
       type: "dim"
+  max_brightness: 0.8
 schema:
   port: int
   lights:
     - id: str
       type: str
+  max_brightness:
+    type: number
+    minimum: 0
+    maximum: 1
+    multipleOf: 0.01
 startup: services
 stdin: false
 init: false

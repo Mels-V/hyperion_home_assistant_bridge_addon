@@ -5,7 +5,7 @@ const { getConfig } = require("./get-config.js");
 const { lights } = getConfig();
 const light_loop = require("./light-loop.js");
 const latest_color = require("./latest_color.js");
-const { TOKEN, PORT } = require("./env.js");
+const { TOKEN, PORT, MAX_BRIGHTNESS } = require("./env.js");
 
 function getIPAddress() {
   const interfaces = os.networkInterfaces();
@@ -37,7 +37,6 @@ server.on("error", (err) => {
 });
 
 const debug = false;
-const max_brightness = 0.8;
 
 if (!TOKEN) {
   throw new Error(
@@ -61,7 +60,7 @@ server.on("listening", async () => {
   const ipAddress = getIPAddress();
   console.log(`server listening ${ipAddress}:${address.port}`);
   for (let i in lights) {
-    light_loop(i, max_brightness, debug);
+    light_loop(i, MAX_BRIGHTNESS, debug);
   }
 });
 

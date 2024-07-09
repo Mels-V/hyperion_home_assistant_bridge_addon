@@ -31,7 +31,7 @@ async function send_color(
   }
 
   if (debug) {
-    console.log("sending", body);
+    console.log("📤 Sending", body);
   }
 
   const response = await fetch(`${HA_URL}/api/services/light/turn_on`, {
@@ -44,9 +44,9 @@ async function send_color(
   });
 
   if (!response.ok) {
-    console.error(`HTTP error! status: ${response.status}`);
+    console.error(`❌ HTTP error! status: ${response.status}`);
     if (response.status === 401) {
-      console.error('Unauthorized: Check your SUPERVISOR_TOKEN and ensure it has the correct permissions.');
+      console.error('❌ Unauthorized: Check your SUPERVISOR_TOKEN and ensure it has the correct permissions.');
     }
     return;
   }
@@ -74,7 +74,7 @@ module.exports = async function light_loop(light_index, max_brightness, debug) {
     }
     if (is_changed) {
       if (debug) {
-        console.time(`light ${light_index} http request took`);
+        console.time(`⏱️ light ${light_index} http request took`);
       }
       const before = Date.now();
       await send_color(
@@ -87,7 +87,7 @@ module.exports = async function light_loop(light_index, max_brightness, debug) {
       const after = Date.now();
       duration = (after - before) / 1000 / TRANSITION_DURATION_DIVIDER;
       if (debug) {
-        console.timeEnd(`light ${light_index} http request took`);
+        console.timeEnd(`⏱️ light ${light_index} http request took`);
       }
       last_color = current_color;
     } else {

@@ -1,4 +1,4 @@
-version: "1.0.1"
+version: "1.0.3"
 slug: hyperion_home_assistant_bridge_addon
 name: Hyperion Home Assistant Bridge - Addon
 description: Bridge between Hyperion and Home Assistant
@@ -24,11 +24,7 @@ schema:
   lights:
     - id: str
       type: str
-  max_brightness:
-    type: number
-    minimum: 0
-    maximum: 1
-    multipleOf: 0.01
+  max_brightness: float
 startup: services
 stdin: false
 init: false

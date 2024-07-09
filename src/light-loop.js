@@ -34,9 +34,6 @@ async function send_color(
     console.log("sending", body);
   }
 
-  // Temporary logging to debug token
-  console.log(`Using SUPERVISOR_TOKEN: ${TOKEN}`);
-
   const response = await fetch(`${HA_URL}/api/services/light/turn_on`, {
     method: "POST",
     headers: {

@@ -1,4 +1,4 @@
-version: "2.7"
+version: "1.0.0"
 slug: hyperion_home_assistant_bridge_addon
 name: Hyperion Home Assistant Bridge - Addon
 description: Bridge between Hyperion and Home Assistant
@@ -13,7 +13,6 @@ homeassistant_api: true
 hassio_api: true
 options:
   port: 41234
-  ha_token: ''
   lights:
     - id: "lampa_na_parapecie_rgb_light"
       type: "rgb"
@@ -21,7 +20,6 @@ options:
       type: "dim"
 schema:
   port: int
-  ha_token: str
   lights:
     - id: str
       type: str

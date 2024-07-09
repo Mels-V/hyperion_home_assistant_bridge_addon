@@ -1,4 +1,4 @@
-const TOKEN = process.env.HA_TOKEN;
+const TOKEN = process.env.SUPERVISOR_TOKEN;
 const HA_URL = "http://supervisor/core";
 const PORT = parseInt(process.env.HA_BRIDGE_PORT || "41234");
 const TRANSITION_DURATION_DIVIDER = parseInt(process.env.HA_DURATION_DIVIDER || "1");

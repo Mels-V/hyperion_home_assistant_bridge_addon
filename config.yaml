@@ -1,4 +1,4 @@
-version: "2.6.6"
+version: "2.7"
 slug: hyperion_home_assistant_bridge_addon
 name: Hyperion Home Assistant Bridge - Addon
 description: Bridge between Hyperion and Home Assistant
@@ -9,6 +9,8 @@ arch:
   - amd64
   - i386
 host_network: true
+homeassistant_api: true
+hassio_api: true
 options:
   port: 41234
   ha_token: ''

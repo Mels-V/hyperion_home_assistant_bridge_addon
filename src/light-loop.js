@@ -34,22 +34,29 @@ async function send_color(
     console.log("sending", body);
   }
 
-  return fetch(`${HA_URL}/api/services/light/turn_on`, {
+  // Temporary logging to debug token
+  console.log(`Using SUPERVISOR_TOKEN: ${TOKEN}`);
+
+  const response = await fetch(`${HA_URL}/api/services/light/turn_on`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${TOKEN}`,
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
-  }).then(async (response) => {
-    if (!response.ok) {
-      console.error(`HTTP error! status: ${response.status}`);
-      return;
-    }
-    if (debug) {
-      console.log(await response.text());
-    }
   });
+
+  if (!response.ok) {
+    console.error(`HTTP error! status: ${response.status}`);
+    if (response.status === 401) {
+      console.error('Unauthorized: Check your SUPERVISOR_TOKEN and ensure it has the correct permissions.');
+    }
+    return;
+  }
+
+  if (debug) {
+    console.log(await response.text());
+  }
 }
 
 module.exports = async function light_loop(light_index, max_brightness, debug) {

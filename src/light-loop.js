@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const { HA_URL, TOKEN, TRANSITION_DURATION_DIVIDER } = require("./env.js");
+
 const { sleep } = require("./util.js");
 const latest_color = require("./latest_color.js");
 const { getConfig } = require("./get-config.js");
@@ -10,7 +11,7 @@ async function send_color(
   color,
   max_brightness,
   duration = 0.18,
-  debug = true
+  debug = false
 ) {
   const brightness = (color[0] + color[1] + color[2]) / 3 / 255;
   if (debug) {
@@ -41,6 +42,10 @@ async function send_color(
     },
     body: JSON.stringify(body),
   }).then(async (response) => {
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+      return;
+    }
     if (debug) {
       console.log(await response.text());
     }

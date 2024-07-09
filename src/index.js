@@ -1,4 +1,5 @@
 const dgram = require("node:dgram");
+const os = require("os");
 const server = dgram.createSocket("udp4");
 const { getConfig } = require("./get-config.js");
 const { lights } = getConfig();
@@ -6,39 +7,18 @@ const light_loop = require("./light-loop.js");
 const latest_color = require("./latest_color.js");
 const { TOKEN, PORT } = require("./env.js");
 
-const winston = require('winston');
-
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    winston.format.printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`)
-  ),
-  transports: [
-    new winston.transports.Console({
-      handleExceptions: true,
-      handleRejections: true
-    })
-  ],
-  exitOnError: false
-});
-
-// Redirect console.log to winston
-console.log = function (message) {
-  logger.info(message);
-};
-
-console.error = function (message) {
-  logger.error(message);
-};
-
-console.warn = function (message) {
-  logger.warn(message);
-};
-
-console.info = function (message) {
-  logger.info(message);
-};
+function getIPAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const name of Object.keys(interfaces)) {
+    for (const iface of interfaces[name]) {
+      if ('IPv4' !== iface.family || iface.internal !== false) {
+        continue;
+      }
+      return iface.address;
+    }
+  }
+  return '127.0.0.1';
+}
 
 // Handle uncaught exceptions and unhandled rejections
 process.on('uncaughtException', (err) => {
@@ -78,7 +58,8 @@ server.on("message", (msg, rinfo) => {
 
 server.on("listening", async () => {
   const address = server.address();
-  console.log(`server listening ${address.address}:${address.port}`);
+  const ipAddress = getIPAddress();
+  console.log(`server listening ${ipAddress}:${address.port}`);
   for (let i in lights) {
     light_loop(i, max_brightness, debug);
   }

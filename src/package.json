@@ -1,6 +1,6 @@
 {
   "name": "hyperion-ha",
-  "version": "1.0.0",
+  "version": "10.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "winston": "^3.3.3",
     "node-fetch": "^2.6.1"
   }
 }

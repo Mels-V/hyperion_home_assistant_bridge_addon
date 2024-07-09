@@ -16,9 +16,17 @@ const logger = winston.createLogger({
     winston.format.printf(({ timestamp, level, message }) => `${timestamp} ${level}: ${message}`)
   ),
   transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: '/config/hyperion_ha_bridge.log' })
-  ]
+    new winston.transports.Console({
+      handleExceptions: true,
+      handleRejections: true
+    }),
+    new winston.transports.File({
+      filename: '/config/hyperion_ha_bridge.log',
+      handleExceptions: true,
+      handleRejections: true
+    })
+  ],
+  exitOnError: false
 });
 
 // Redirect console.log to winston

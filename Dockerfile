@@ -1,5 +1,8 @@
 FROM node:14
 
+# Install jq
+RUN apt-get update && apt-get install -y jq
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
